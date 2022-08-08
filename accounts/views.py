@@ -23,7 +23,7 @@ class ProfilePageView(generic.TemplateView):
 class LoginView(views.LoginView):
     form_class = CustomAuthenticationForm
     template_name = 'accounts/login.html'
-    success_url = reverse_lazy('homepage')
+    success_url = reverse_lazy('landing-page')
 
     def form_valid(self, form):
         remember_me = form.cleaned_data['remember_me']
@@ -67,7 +67,7 @@ def activate(request, uidb64, token):
 
 class ChangePasswordView(views.PasswordChangeView):
     template_name = 'accounts/change-password.html'
-    success_url = reverse_lazy('homepage')
+    success_url = reverse_lazy('landing-page')
 
 
 class ResetPasswordView(views.PasswordResetView):
