@@ -16,10 +16,6 @@ from django.contrib.auth import views
 from django.contrib.auth import login
 
 
-class ProfilePageView(generic.TemplateView):
-    template_name = 'accounts/profile.html'
-
-
 class LoginView(views.LoginView):
     form_class = CustomAuthenticationForm
     template_name = 'accounts/login.html'
