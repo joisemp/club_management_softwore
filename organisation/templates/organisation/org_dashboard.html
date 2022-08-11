@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>Dashboard</h1>
+{{request.user.orgprofile.org_name}} | 
+{{request.user.orgprofile.org_email}} | 
+{{request.user.orgprofile.org_address1}}
 {% endblock content %}
