@@ -4,11 +4,23 @@
 
 <h1>Club Home</h1>
 
+<div class="container mb-3">
+    <a href="{% url 'clubs:club-create'%}">Create club</a>
+</div>
+
 {% for item in club %}
 <div class="container">
     <div class="card">
         <h3>{{ item.name }}</h3>
         <p>{{ item.description }}</p>
+        <div class="d-flex">
+            <a href="#" class="m-2">
+                <button class="btn btn-primary">Edit</button>
+            </a>
+            <a href="#" class="m-2">
+                <button class="btn btn-danger">Delete</button>
+            </a>
+        </div>
     </div>
 </div>
 {% endfor %}
