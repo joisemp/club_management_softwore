@@ -6,5 +6,6 @@ app_name = 'clubs'
 
 urlpatterns = [
     path("", views.clubs_list, name="club-list"),
-    path("create/", views.club_create_view, name="club-create"),
+    path("create", views.club_create_view, name="club-create"),
+    path("<id>", views.club_detail_view, name="club-detail"),
 ]

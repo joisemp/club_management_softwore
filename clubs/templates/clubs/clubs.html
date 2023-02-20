@@ -8,20 +8,22 @@
     <a href="{% url 'clubs:club-create'%}">Create club</a>
 </div>
 
-{% for item in club %}
+{% for club in clubs %}
 <div class="container">
-    <div class="card">
-        <h3>{{ item.name }}</h3>
-        <p>{{ item.description }}</p>
-        <div class="d-flex">
-            <a href="#" class="m-2">
-                <button class="btn btn-primary">Edit</button>
-            </a>
-            <a href="#" class="m-2">
-                <button class="btn btn-danger">Delete</button>
-            </a>
+    <a href="{% url 'clubs:club-detail' club.pk %}">
+        <div class="card">
+            <h3>{{ club.name }}</h3>
+            <p>{{ club.description }}</p>
+            <div class="d-flex">
+                <a href="#" class="m-2">
+                    <button class="btn btn-primary">Edit</button>
+                </a>
+                <a href="#" class="m-2">
+                    <button class="btn btn-danger">Delete</button>
+                </a>
+            </div>
         </div>
-    </div>
+    </a>
 </div>
 {% endfor %}
 
