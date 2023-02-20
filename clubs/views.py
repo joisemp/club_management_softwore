@@ -8,10 +8,8 @@ from .forms import ClubDetailForm
 
 def clubs_list(request):
     template = loader.get_template('clubs/clubs.html')
-    club = ClubProfile.objects.all()
-    context = {
-        'club':club
-    }
+    context = {}
+    context['clubs'] = ClubProfile.objects.all()
     return HttpResponse(template.render(context, request))
 
 
@@ -23,4 +21,11 @@ def club_create_view(request):
         form.save()
         return HttpResponseRedirect(reverse('clubs:club-list'))
     context['form'] = form
+    return HttpResponse(template.render(context, request))
+
+
+def club_detail_view(request, id):
+    template = loader.get_template('clubs/club_details.html')
+    context = {}
+    context['club'] = ClubProfile.objects.get(id=id)
     return HttpResponse(template.render(context, request))
