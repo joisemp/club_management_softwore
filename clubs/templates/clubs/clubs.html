@@ -1,4 +1,11 @@
 {% extends 'base.html' %}
+{% load sass_tags %}
+
+{% block stylesheet %}
+
+<link href="{% sass_src 'stylesheets/club_list/club_list.scss' %}" rel="stylesheet" type="text/css" />
+
+{% endblock stylesheet %}
 
 {% block content %}
 
