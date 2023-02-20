@@ -34,10 +34,21 @@ def club_detail_view(request, id):
 def club_edit_view(request, id):
     template = loader.get_template('clubs/edit_club.html')
     context = {}
-    club = ClubProfile.objects.get(id = id)
-    form = ClubEditForm(request.POST or None, instance = club)
+    club = ClubProfile.objects.get(id=id)
+    form = ClubEditForm(request.POST or None, instance=club)
     if form.is_valid():
         instance = form.save()
         return HttpResponseRedirect(reverse('clubs:club-detail', args=[instance.pk]))
     context['form'] = form
+    return HttpResponse(template.render(context, request))
+
+
+def club_delete_view(request, id):
+    template = loader.get_template('clubs/delete_club.html')
+    context = {}
+    club = ClubProfile.objects.get(id=id)
+    context['club'] = club
+    if request.method == 'POST':
+        club.delete()
+        return HttpResponseRedirect(reverse('clubs:club-list'))
     return HttpResponse(template.render(context, request))

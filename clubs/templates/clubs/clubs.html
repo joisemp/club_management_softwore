@@ -18,7 +18,7 @@
                 <a href="{% url 'clubs:club-edit' club.pk %}" class="m-2">
                     <button class="btn btn-primary">Edit</button>
                 </a>
-                <a href="#" class="m-2">
+                <a href="{% url 'clubs:club-delete' club.pk %}" class="m-2">
                     <button class="btn btn-danger">Delete</button>
                 </a>
             </div>
