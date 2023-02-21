@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 from .forms import UserRegisterForm, CustomAuthenticationForm
+from .models import OrgProfile
 
 
 from accounts.verification_email import send_verification_mail
@@ -45,7 +46,9 @@ class UserRegisterView(generic.CreateView):
     def form_valid(self, form):
         user = form.save(commit=False)
         user.is_active = False
+        user.is_org = True
         user.save()
+        OrgProfile.objects.create(user=user, name=form.cleaned_data['organisation_name'])
         send_verification_mail(self.request, user, form)
         return super(UserRegisterView, self).form_valid(form)
 
