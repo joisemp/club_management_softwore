@@ -7,10 +7,10 @@ User = get_user_model()
 
 
 class UserRegisterForm(UserCreationForm):
-
+    organisation_name = forms.CharField(widget=forms.TextInput(attrs={'required':True}))
     class Meta:
         model = User
-        fields = ['email']
+        fields = ['organisation_name','email']
 
 
 class CustomAuthenticationForm(AuthenticationForm):
