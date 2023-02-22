@@ -1,38 +1,38 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import generic
 from .forms import UserRegisterForm, CustomAuthenticationForm
 from .models import OrgProfile
-
-
+from .mixins import OrgOnlyAndLoginRequiredMixin, CheckUserAndRedirectMixin
 from accounts.verification_email import send_verification_mail
 from django.utils.encoding import force_text
 from . token_generator import account_activation_token
 from django.contrib.auth import get_user_model
 from django.utils.http import urlsafe_base64_decode
 from django.http import HttpResponse
-
-
 from django.contrib.auth import views
 from django.contrib.auth import login
 
 
-class ProfilePageView(generic.TemplateView):
+class LandingPageView(CheckUserAndRedirectMixin, generic.TemplateView):
+    template_name = 'landing_page.html'
+
+
+class OrgProfilePageView(OrgOnlyAndLoginRequiredMixin, generic.TemplateView):
     template_name = 'accounts/profile.html'
 
 
 class LoginView(views.LoginView):
     form_class = CustomAuthenticationForm
     template_name = 'accounts/login.html'
-    success_url = reverse_lazy('landing-page')
 
     def form_valid(self, form):
         remember_me = form.cleaned_data['remember_me']
         login(self.request, form.get_user())
         if remember_me:
             self.request.session.set_expiry(1209600)
-        return super(LoginView, self).form_valid(form)
-    
+        return redirect('landing-page')
+
 
 class LogoutView(views.LogoutView):
     template_name = 'accounts/logged_out.html'
@@ -48,7 +48,8 @@ class UserRegisterView(generic.CreateView):
         user.is_active = False
         user.is_org = True
         user.save()
-        OrgProfile.objects.create(user=user, name=form.cleaned_data['organisation_name'])
+        OrgProfile.objects.create(
+            user=user, name=form.cleaned_data['organisation_name'])
         send_verification_mail(self.request, user, form)
         return super(UserRegisterView, self).form_valid(form)
 
