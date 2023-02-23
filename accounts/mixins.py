@@ -16,4 +16,6 @@ class CheckUserAndRedirectMixin(AccessMixin):
         if request.user.is_authenticated:
             if request.user.is_org:
                 return redirect('accounts:org-profile')
+            else:
+                return redirect('clubs:club-list')
         return super().dispatch(request, *args, **kwargs)

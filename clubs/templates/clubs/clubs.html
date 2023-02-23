@@ -17,10 +17,11 @@
 
 {% for club in clubs %}
 <div class="container">
-    <a href="{% url 'clubs:club-detail' club.pk %}">
+    <a class="card-link" href="{% url 'clubs:club-detail' club.pk %}">
         <div class="card">
             <h3>{{ club.name }}</h3>
             <p>{{ club.description }}</p>
+            {% if request.user.is_authenticated and request.user.is_org %}
             <div class="d-flex">
                 <a href="{% url 'clubs:club-edit' club.pk %}" class="m-2">
                     <button class="btn btn-primary">Edit</button>
@@ -29,6 +30,7 @@
                     <button class="btn btn-danger">Delete</button>
                 </a>
             </div>
+            {% endif %}
         </div>
     </a>
 </div>
