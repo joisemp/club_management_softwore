@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from .models import ClubProfile
 from django.template import loader
@@ -21,7 +21,10 @@ def club_create_view(request):
         form.save()
         return HttpResponseRedirect(reverse('clubs:club-list'))
     context['form'] = form
-    return HttpResponse(template.render(context, request))
+    if request.user.is_authenticated and request.user.is_org:
+        return HttpResponse(template.render(context, request))
+    else:
+        return redirect('clubs:club-list')
 
 
 def club_detail_view(request, id):
@@ -40,7 +43,10 @@ def club_edit_view(request, id):
         instance = form.save()
         return HttpResponseRedirect(reverse('clubs:club-detail', args=[instance.pk]))
     context['form'] = form
-    return HttpResponse(template.render(context, request))
+    if request.user.is_authenticated and request.user.is_org:
+        return HttpResponse(template.render(context, request))
+    else:
+        return redirect('clubs:club-list')
 
 
 def club_delete_view(request, id):
@@ -51,4 +57,7 @@ def club_delete_view(request, id):
     if request.method == 'POST':
         club.delete()
         return HttpResponseRedirect(reverse('clubs:club-list'))
-    return HttpResponse(template.render(context, request))
+    if request.user.is_authenticated and request.user.is_org:
+        return HttpResponse(template.render(context, request))
+    else:
+        return redirect('clubs:club-list')
