@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.forms import CheckboxSelectMultiple
 
-from .models import User, OrgProfile
+from .models import User, OrgProfile, StudentProfile
 
 
 @admin.register(User)
@@ -36,3 +36,8 @@ class UserAdmin(DjangoUserAdmin):
 @admin.register(OrgProfile)
 class OrgProfileAdmin(admin.ModelAdmin):
     list_display = ('name',)
+    
+
+@admin.register(StudentProfile)
+class StudentProfileAdmin(admin.ModelAdmin):
+    list_display = ('org', 'first_name', 'last_name', 'email')

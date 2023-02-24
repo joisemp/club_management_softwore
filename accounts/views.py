@@ -1,8 +1,8 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import generic
-from .forms import UserRegisterForm, CustomAuthenticationForm
-from .models import OrgProfile
+from .forms import StudentProfileForm, UserRegisterForm, CustomAuthenticationForm
+from .models import OrgProfile, StudentProfile
 from .mixins import OrgOnlyAndLoginRequiredMixin, CheckUserAndRedirectMixin
 from accounts.verification_email import send_verification_mail
 from django.utils.encoding import force_text
@@ -12,6 +12,10 @@ from django.utils.http import urlsafe_base64_decode
 from django.http import HttpResponse
 from django.contrib.auth import views
 from django.contrib.auth import login
+from .uitils import generate_password
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class LandingPageView(CheckUserAndRedirectMixin, generic.TemplateView):
@@ -65,6 +69,8 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+    elif user is not None and user.is_active:
+        return redirect('accounts:login')
     else:
         return HttpResponse('Activation link is invalid!')
 
@@ -93,3 +99,31 @@ class ConfirmPasswordResetView(views.PasswordResetConfirmView):
 
 class CompletePasswordResetView(views.PasswordResetCompleteView):
     template_name = 'accounts/password_reset/password_reset_complete.html'
+
+
+class StudentRegisterView(generic.CreateView):
+    form_class = StudentProfileForm
+    template_name = 'accounts/register_student.html'
+
+    def form_valid(self, form):
+        email = form.cleaned_data.get('email')
+        password = str(generate_password())
+        first_name = form.cleaned_data.get('first_name')
+        last_name = form.cleaned_data.get('last_name')
+        
+        user = User.objects.create(
+            email = email,
+            password = password,
+            is_student = True
+        )
+        user.save()
+        
+        student_profile = StudentProfile.objects.create(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            org = OrgProfile.objects.get(user=self.request.user),
+            user = user
+        )
+        student_profile.save()
+        return redirect('landing-page')
