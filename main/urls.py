@@ -9,6 +9,7 @@ urlpatterns = [
     path('', LandingPageView.as_view(), name='landing-page'),
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('clubs/', include('clubs.urls', namespace='clubs')),
+    path('org/', include('org.urls', namespace='org')),
 ]
 
 if settings.DEBUG:
