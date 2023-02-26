@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'sass_processor',
     'accounts',
     'clubs',
+    'org',
 ]
 
 MIDDLEWARE = [

@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.forms import CheckboxSelectMultiple
 
-from .models import User, OrgProfile, StudentProfile
+from .models import User, StudentProfile
 
 
 @admin.register(User)
@@ -17,7 +17,7 @@ class UserAdmin(DjangoUserAdmin):
 
     fieldsets = (
         (_('User'), {'fields': ('first_name', 'last_name', 'email', 'password')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser','is_org', 'groups')}),
+        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser','is_org', 'is_student', 'groups')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
 
@@ -29,13 +29,9 @@ class UserAdmin(DjangoUserAdmin):
             'fields': ('email', 'password1', 'password2'),
         }),
     )
-    list_display = ('email', 'is_active','is_org', 'is_staff', 'is_superuser')
+    list_display = ('email', 'is_active','is_org','is_student', 'is_staff', 'is_superuser')
     search_fields = ('email', 'first_name', 'last_name')
     ordering = ()
-
-@admin.register(OrgProfile)
-class OrgProfileAdmin(admin.ModelAdmin):
-    list_display = ('name',)
     
 
 @admin.register(StudentProfile)

@@ -11,9 +11,14 @@
 
 <h1>Club Home</h1>
 
+{% if request.user.is_org %}
 <div class="container mb-3">
     <a href="{% url 'clubs:club-create'%}">Create club</a>
 </div>
+{% elif request.user.is_student %}
+<p>You are logged in as {{request.user.studentprofile.first_name}} {{request.user.studentprofile.last_name}}</p>
+<p>Email : {{request.user.studentprofile.email}}</p>
+{% endif %}
 
 {% for club in clubs %}
 <div class="container">

@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from . user_manager import UserManager
+from org.models import OrgProfile
 
 
 class User(AbstractUser):
@@ -15,14 +16,6 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
     
     objects = UserManager()
-    
-
-class OrgProfile(models.Model):
-    user = models.OneToOneField(User, models.CASCADE)
-    name = models.CharField(max_length=300)
-    
-    def __str__(self):
-        return str(self.name)
     
 
 class StudentProfile(models.Model):

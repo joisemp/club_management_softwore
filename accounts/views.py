@@ -2,8 +2,9 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import generic
 from .forms import StudentProfileForm, UserRegisterForm, CustomAuthenticationForm
-from .models import OrgProfile, StudentProfile
-from .mixins import OrgOnlyAndLoginRequiredMixin, CheckUserAndRedirectMixin
+from .models import StudentProfile
+from org.models import OrgProfile
+from .mixins import CheckUserAndRedirectMixin
 from accounts.verification_email import send_verification_mail
 from django.utils.encoding import force_text
 from . token_generator import account_activation_token
@@ -20,10 +21,6 @@ User = get_user_model()
 
 class LandingPageView(CheckUserAndRedirectMixin, generic.TemplateView):
     template_name = 'landing_page.html'
-
-
-class OrgProfilePageView(OrgOnlyAndLoginRequiredMixin, generic.TemplateView):
-    template_name = 'accounts/profile.html'
 
 
 class LoginView(views.LoginView):
