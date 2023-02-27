@@ -9,7 +9,13 @@ from .forms import ClubCreateForm, ClubEditForm
 def clubs_list(request):
     template = loader.get_template('clubs/clubs.html')
     context = {}
-    context['clubs'] = ClubProfile.objects.all()
+    if request.user.is_authenticated:
+        if request.user.is_org:
+            context['clubs'] = ClubProfile.objects.filter(org=request.user.orgprofile)
+        elif request.user.is_student:
+            context['clubs'] = ClubProfile.objects.filter(org=request.user.studentprofile.org)
+    else:
+        return redirect('accounts:login')
     return HttpResponse(template.render(context, request))
 
 
@@ -18,6 +24,9 @@ def club_create_view(request):
     context = {}
     form = ClubCreateForm(request.POST or None)
     if form.is_valid():
+        form.save(commit=False)
+        org = request.user.orgprofile
+        form.instance.org=org
         form.save()
         return HttpResponseRedirect(reverse('clubs:club-list'))
     context['form'] = form
