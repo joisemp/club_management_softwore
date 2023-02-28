@@ -6,5 +6,6 @@ app_name = 'org'
 
 
 urlpatterns = [
-    path('profile/', login_required(views.OrgProfilePageView.as_view()), name='org-profile'),
+    path('', login_required(views.OrgDashboardView.as_view()), name='dashboard'),
+    path('profile/', login_required(views.OrgProfilePageView.as_view()), name='profile'),
 ]

@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import AccessMixin
 from django.shortcuts import redirect
 
 
-class OrgOnlyAndLoginRequiredMixin(AccessMixin):
+class OrgOnlyAccessMixin(AccessMixin):
     """Verify that the current user is authenticated and is organisor."""
 
     def dispatch(self, request, *args, **kwargs):

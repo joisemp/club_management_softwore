@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Welcome to Profile page</h1>
+<h1>Profile page (Other users)</h1>
 
-Logged in as @{{request.user}}
-<p>Organisation Name : {{request.user.orgprofile.name}}</p>
+Logged in as @{{request.user.studentprofile.first_name}} {{request.user.studentprofile.last_name}}
+<p>Organisation Name : {{request.user.studentprofile.org}}</p>
 {% endblock content %}

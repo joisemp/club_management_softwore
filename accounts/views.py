@@ -23,7 +23,7 @@ class LandingPageView(CheckUserAndRedirectMixin, generic.TemplateView):
     template_name = 'landing_page.html'
 
 
-class LoginView(views.LoginView):
+class LoginView(CheckUserAndRedirectMixin, views.LoginView):
     form_class = CustomAuthenticationForm
     template_name = 'accounts/login.html'
 
@@ -39,7 +39,7 @@ class LogoutView(views.LogoutView):
     template_name = 'accounts/logged_out.html'
 
 
-class UserRegisterView(generic.CreateView):
+class UserRegisterView(CheckUserAndRedirectMixin, generic.CreateView):
     form_class = UserRegisterForm
     template_name = 'accounts/register.html'
     success_url = reverse_lazy('accounts:login')
@@ -124,3 +124,7 @@ class StudentRegisterView(generic.CreateView):
         )
         student_profile.save()
         return redirect('landing-page')
+
+
+class StudentProfileView(generic.TemplateView):
+    template_name = 'accounts/profile.html'
