@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Welcome to Organisation Profile page</h1>
+<div class="container">
+    <h1>Welcome to Organisation Profile page</h1>
 
-Logged in as @{{request.user}}
-<p>Organisation Name : {{request.user.orgprofile.name}}</p>
+    Logged in as @{{request.user}}
+    <p>Organisation Name : {{request.user.orgprofile.name}}</p>
+</div>
 {% endblock content %}
