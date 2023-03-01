@@ -123,7 +123,7 @@ class StudentRegisterView(generic.CreateView):
             user = user
         )
         student_profile.save()
-        return redirect('landing-page')
+        return redirect('org:student-list')
 
 
 class StudentProfileView(generic.TemplateView):

@@ -6,8 +6,8 @@
     <h1>Organisation Dashboard</h1>
     <ul>
         <li><a href="{% url 'org:profile' %}">Profile</a></li>
-        <li><a href="#">Clubs</a></li>
-        <li><a href="#">Students</a></li>
+        <li><a href="{% url 'clubs:club-list' %}">Clubs</a></li>
+        <li><a href="{% url 'org:student-list' %}">Students</a></li>
     </ul>
 </div>
 
