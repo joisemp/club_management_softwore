@@ -39,3 +39,19 @@ def student_edit_view(request, id):
         return HttpResponse(template.render(context, request))
     else:
         return redirect('org:student-list')
+    
+    
+def student_delete_view(request, id):
+    template = loader.get_template('org/delete_student.html')
+    context = {}
+    student_profile = StudentProfile.objects.get(id=id)
+    context['student_profile'] = student_profile
+    if request.method == 'POST':
+        user = student_profile.user
+        user.delete()
+        student_profile.delete()
+        return HttpResponseRedirect(reverse('org:student-list'))
+    if request.user.is_authenticated and request.user.is_org:
+        return HttpResponse(template.render(context, request))
+    else:
+        return redirect('landing-page')
