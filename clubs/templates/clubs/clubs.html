@@ -23,16 +23,16 @@
 {% for club in clubs %}
 <div class="container">
     <a class="card-link" href="{% url 'clubs:club-detail' club.pk %}">
-        <div class="card">
+        <div class="card my-3">
             <h3>{{ club.name }}</h3>
             <p>{{ club.description }}</p>
             {% if request.user.is_authenticated and request.user.is_org %}
             <div class="d-flex">
-                <a href="{% url 'clubs:club-edit' club.pk %}" class="m-2">
-                    <button class="btn btn-primary">Edit</button>
+                <a href="{% url 'clubs:club-edit' club.pk %}" class="mx-1">
+                    <button class="btn btn-sm btn-primary">Edit</button>
                 </a>
-                <a href="{% url 'clubs:club-delete' club.pk %}" class="m-2">
-                    <button class="btn btn-danger">Delete</button>
+                <a href="{% url 'clubs:club-delete' club.pk %}" class="mx-1">
+                    <button class="btn btn-sm btn-danger">Delete</button>
                 </a>
             </div>
             {% endif %}
