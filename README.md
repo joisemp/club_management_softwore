@@ -1,2 +1,4 @@
 # Club Management Softwore
-- This porject is yet to complete
+
+- This is a Club management software bulid on Django (This porject is yet to complete)
+

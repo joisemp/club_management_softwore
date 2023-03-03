@@ -14,7 +14,7 @@
         <span>Organisation : {{student.org}}</span>
         <div class="d-flex mt-3">
             <a href="{% url 'org:student-edit' student.pk %}" class="btn btn-sm btn-primary mx-1">Edit</a>
-            <a href="#" class="btn btn-sm btn-danger mx-1">Delete</a>
+            <a href="{% url 'org:student-delete' student.pk %}" class="btn btn-sm btn-danger mx-1">Delete</a>
         </div>
     </div>
     {% endfor %}
