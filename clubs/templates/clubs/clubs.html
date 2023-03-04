@@ -9,22 +9,25 @@
 
 {% block content %}
 
-<h1>Club Home</h1>
+<div class="container">
+    <h1>Club Home</h1>
 
-{% if request.user.is_org %}
-<div class="container mb-3">
-    <a href="{% url 'clubs:club-create'%}">Create club</a>
+    {% if request.user.is_org %}
+    <div class="container mb-3">
+        <a href="{% url 'clubs:club-create'%}">Create club</a>
+    </div>
+    {% elif request.user.is_student %}
+    <span>You are logged in as {{request.user.studentprofile.first_name}}
+        {{request.user.studentprofile.last_name}}</span>
+    <p>Email : {{request.user.studentprofile.email}}</p>
+    {% endif %}
 </div>
-{% elif request.user.is_student %}
-<p>You are logged in as {{request.user.studentprofile.first_name}} {{request.user.studentprofile.last_name}}</p>
-<p>Email : {{request.user.studentprofile.email}}</p>
-{% endif %}
 
 {% for club in clubs %}
 <div class="container">
     <a class="card-link" href="{% url 'clubs:club-detail' club.pk %}">
         <div class="card my-3">
-            <h3>{{ club.name }}</h3>
+            <h5><b>{{ club.name }}</b></h5>
             <p>{{ club.description }}</p>
             {% if request.user.is_authenticated and request.user.is_org %}
             <div class="d-flex">
